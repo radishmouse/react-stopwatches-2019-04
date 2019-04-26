@@ -1,44 +1,34 @@
 import React from 'react';
-import ElapsedTime from './ElapsedTime';
-import StartButton from './StartButton';
-import StopButton from './StopButton';
+import Stopwatch from './Stopwatch';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
-      isRunning: false
+      howMany: 1
     }
-    this.clock = 0;    
   }
 
-  componentDidMount() {
-    console.log('starting clock');
-    setInterval(() => {
-      if (this.state.isRunning) {
-        console.log('clock tick');
-        this.setState({
-          time: this.state.time + 1
-        });
-      }
-    }, 1000); // call once a second
-  }
-  
   render() {
+    let stopwatches = [];
+    for (let i=0; i<this.state.howMany; i++) {
+      stopwatches = [
+        ...stopwatches,
+        <Stopwatch />
+      ]
+    }
     return (
       <div className="App">
-        <ElapsedTime time={this.state.time} />
-        <StartButton handleClick={this._toggleIsRunning} />
-        <StopButton handleClick={this._toggleIsRunning} />
+        <button onClick={this._addStopwatch}>+</button>
+        {stopwatches}
       </div>
     );
   }
 
-  _toggleIsRunning = () => {
+  _addStopwatch = () => {
     this.setState({
-      isRunning: !this.state.isRunning  // Use the ! operator to flip the boolean
+      howMany: this.state.howMany + 1
     });
   }
 
