@@ -16,7 +16,14 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('starting clock');
-    requestAnimationFrame(this._tick);
+    setInterval(() => {
+      if (this.state.isRunning) {
+        console.log('clock tick');
+        this.setState({
+          time: this.state.time + 1
+        });
+      }
+    }, 1000); // call once a second
   }
   
   render() {
@@ -35,26 +42,5 @@ class App extends React.Component {
     });
   }
 
-  // Our _tick method will get called 60 times per second.
-  // We'll keep track of how many times it gets called using a variable.
-  // Every 60th time it gets called, we will increment this.state.time
-  _tick = () => {
-    // Intentionally using an instance variable, not state.
-    // We'll use this variable to determine whether to increase this.state.time
-    this.clock++;
-
-    if (this.clock % 60 === 0) {
-      if (this.state.isRunning) {
-        console.log('clock tick');
-        this.setState({
-          time: this.state.time + 1
-        });
-      }
-    }
-
-    // This is the browser function that causes the browser to call our _tick
-    // 60 times per second.
-    requestAnimationFrame(this._tick);
-  }
 }
 export default App;
