@@ -1,14 +1,17 @@
 import React from 'react';
 import ElapsedTime from './ElapsedTime';
+import StartButton from './StartButton';
+import StopButton from './StopButton';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      time: 0
+      time: 0,
+      isRunning: false
     }
-    this.clock = 0;
+    this.clock = 0;    
   }
 
   componentDidMount() {
@@ -19,9 +22,17 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-       <ElapsedTime time={this.state.time} />
+        <ElapsedTime time={this.state.time} />
+        <StartButton handleClick={this._toggleIsRunning} />
+        <StopButton handleClick={this._toggleIsRunning} />
       </div>
     );
+  }
+
+  _toggleIsRunning = () => {
+    this.setState({
+      isRunning: !this.state.isRunning
+    });
   }
 
   _tick = () => {
@@ -31,10 +42,12 @@ class App extends React.Component {
     this.clock++;
 
     if (this.clock % 60 === 0) {
-      console.log('clock tick');
-      this.setState({
-        time: this.state.time + 1
-      })
+      if (this.state.isRunning) {
+        console.log('clock tick');
+        this.setState({
+          time: this.state.time + 1
+        });
+      }
     }
 
     // This causes the browser to call our _tick
