@@ -6,8 +6,20 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      howMany: 1
+      howMany: 1,
+      clock: 0
     }
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+
+      console.log('clock tick');
+      this.setState({
+        clock: this.state.clock + 1
+      });
+
+    }, 1000); // call once a second
   }
 
   render() {
@@ -15,7 +27,7 @@ class App extends React.Component {
     for (let i=0; i<this.state.howMany; i++) {
       stopwatches = [
         ...stopwatches,
-        <Stopwatch />
+        <Stopwatch key={i} clock={this.state.clock}/>
       ]
     }
     return (

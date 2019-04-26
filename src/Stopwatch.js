@@ -8,28 +8,28 @@ class Stopwatch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0,
-      isRunning: false
-    }
-    this.clock = 0;    
+      originalClock: this.props.clock, // the first clock value passed in
+      pausedFor: 0,
+      isRunning: true
+    } 
   }
 
   componentDidMount() {
     console.log('starting clock');
     setInterval(() => {
-      if (this.state.isRunning) {
-        console.log('clock tick');
-        this.setState({
-          time: this.state.time + 1
-        });
-      }
-    }, 1000); // call once a second
+        if (!this.state.isRunning) {
+            this.setState({
+                pausedFor: this.state.pausedFor + 1
+            })
+        }
+    }, 1000);
   }
   
   render() {
+    let clockValue = this.props.clock - this.state.originalClock - this.state.pausedFor;
     return (
       <div className="Stopwatch">
-        <ElapsedTime time={this.state.time} />
+        <ElapsedTime time={clockValue} />
         <StartButton handleClick={this._toggleIsRunning} />
         <StopButton handleClick={this._toggleIsRunning} />
       </div>
