@@ -1,7 +1,7 @@
 import React from 'react';
 import ElapsedTime from './ElapsedTime';
-import StartButton from './StartButton';
-import StopButton from './StopButton';
+import ControlButton from './ControlButton';
+
 
 class App extends React.Component {
 
@@ -23,22 +23,24 @@ class App extends React.Component {
     return (
       <div className="App">
         <ElapsedTime time={this.state.time} />
-        <StartButton handleClick={this._toggleIsRunning} />
-        <StopButton handleClick={this._toggleIsRunning} />
+        <ControlButton label="play" handleClick={this._toggleIsRunning} />
+        <ControlButton label="pause" handleClick={this._toggleIsRunning} />
       </div>
     );
   }
 
   _toggleIsRunning = () => {
     this.setState({
-      isRunning: !this.state.isRunning
+      isRunning: !this.state.isRunning  // Use the ! operator to flip the boolean
     });
   }
 
+  // Our _tick method will get called 60 times per second.
+  // We'll keep track of how many times it gets called using a variable.
+  // Every 60th time it gets called, we will increment this.state.time
   _tick = () => {
-    // console.log('tick')
-    // intentionally using an instance variable, not state
-    // we'll use the variable to determine when to increase this.state.time
+    // Intentionally using an instance variable, not state.
+    // We'll use this variable to determine whether to increase this.state.time
     this.clock++;
 
     if (this.clock % 60 === 0) {
@@ -50,8 +52,8 @@ class App extends React.Component {
       }
     }
 
-    // This causes the browser to call our _tick
-    // method every 60th of a second (roughly)
+    // This is the browser function that causes the browser to call our _tick
+    // 60 times per second.
     requestAnimationFrame(this._tick);
   }
 }
