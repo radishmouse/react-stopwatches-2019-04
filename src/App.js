@@ -16,7 +16,7 @@ class App extends React.Component {
 
   componentDidMount() {
     console.log('starting clock');
-    requestAnimationFrame(this._tick);
+    requestAnimationFrame(this._tick); // run this at the "very next clock cycle"
   }
   
   render() {
