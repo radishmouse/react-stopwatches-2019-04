@@ -33,6 +33,7 @@ class Stopwatch extends React.Component {
   // new props each tick of the global clock.
   // If this Stopwatch is paused, when it receive a clock tick, we need to increment value of pausedFor.
   static getDerivedStateFromProps(props, state) {
+    // getDerivedStateFromProps is like a `setState` every time you receive props.
     return {
         pausedFor: state.isRunning ? state.pausedFor : state.pausedFor + 1
     }
