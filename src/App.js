@@ -11,14 +11,16 @@ class App extends React.Component {
       time: 0,
       isRunning: false
     }
-    this.clock = 0;    
+    this.clock = 0;    // ignore this, it goes with a different branch. hahahahahaha
   }
 
   componentDidMount() {
-    console.log('starting clock');
+    console.log('componentDidMount: starting clock');
     setInterval(() => {
+      console.log('interval function got called');
       if (this.state.isRunning) {
         console.log('clock tick');
+        // this.state.time++; // NOOOOOoOOOooooOO
         this.setState({
           time: this.state.time + 1
         });
@@ -27,6 +29,7 @@ class App extends React.Component {
   }
   
   render() {
+    console.log('i\'m rendering!');
     return (
       <div className="App">
         <ElapsedTime time={this.state.time} />
